@@ -4,6 +4,7 @@ const screens = document.querySelectorAll('.screen');
 const time_list = document.querySelector('#time-list');
 const time_element = document.querySelector('#time');
 const board = document.querySelector('#board');
+const colors = ['#3d4', '#d5d', '#dee', '#fdd', '#dd0'];
 let time = 0;
 let score = 0;
 
@@ -20,8 +21,8 @@ time_list.addEventListener('click', (event) => {
     }
 })
 
-board.addEventListener('click', (event)=>{
-    if(event.target.classList.contains('circle')){
+board.addEventListener('click', (event) => {
+    if (event.target.classList.contains('circle')) {
         score++;
         event.target.remove();
         create_random_circle();
@@ -53,8 +54,9 @@ function finish_game() {
 };
 
 function create_random_circle() {
+    const min = 30;
     const max = 60;
-    const size = get_random_number(10, max);
+    const size = get_random_number(min, max);
 
     const qqq = board.getBoundingClientRect();
     const x = get_random_number(max, qqq.width - size);
@@ -62,6 +64,7 @@ function create_random_circle() {
 
     const circle = document.createElement('div');
     circle.classList.add('circle');
+    circle.style.background = get_random_color();
     circle.style.width = `${size}px`;
     circle.style.height = `${size}px`;
     circle.style.left = `${x}px`;
@@ -72,4 +75,9 @@ function create_random_circle() {
 
 function get_random_number(min, max) {
     return Math.random() * (max - min) + min;
+}
+
+function get_random_color() {
+    let index = Math.floor(Math.random() * colors.length);
+    return colors[index];
 }
